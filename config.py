@@ -21,3 +21,4 @@ class Config:
     PAYPAL_SECRET = os.getenv("PAYPAL_SECRET")
 
     PAYPAL_MODE = "live"  # change to "live"
+    BASE_URL = "https://api-m.paypal.com"
