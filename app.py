@@ -177,44 +177,37 @@ Date Generated: {date_generated}
 # =========================
 @app.route('/dashboard')
 def user_dashboard():
-    if 'user' not in session:
-        return redirect(url_for('login'))
+    return render_template('dashboard.html', tickets=tickets.values())
 
-    user_email = session['user']
-    user_tickets = [t for t in tickets.values() if t['email'] == user_email]
-
-    return render_template('dashboard.html', tickets=user_tickets)
-
-@app.route('/buy')
+@app.route('/buy', methods=['GET', 'POST'])
 def buy_ticket():
-    if 'user' not in session:
-        return redirect('/login')
+    if request.method == 'POST':
+        name = request.form['name']
+        surname = request.form['surname']
+        email = request.form['email']
+        count = int(request.form.get('count', 1))
 
-    count = int(request.args.get('count', 1))
+        for _ in range(count):
+            ticket_id = str(uuid.uuid4())
+            code = random.randint(1000, 9999)
 
-    user = session['user']
+            qr_path = f"static/{ticket_id}.png"
+            qrcode.make(str(code)).save(qr_path)
 
-    for _ in range(count):
-        ticket_id = str(uuid.uuid4())
-        code = random.randint(1000, 9999)
+            tickets[ticket_id] = {
+                'name': name,
+                'surname': surname,
+                'email': email,
+                'code': code,
+                'qr': qr_path,
+                'date_purchased': datetime.now().strftime("%Y-%m-%d %H:%M"),
+                'used': False,
+                'type': 'user'
+            }
 
-        qr_path = f"static/{ticket_id}.png"
-        qrcode.make(str(code)).save(qr_path)
+        return redirect(url_for('user_dashboard'))
 
-        
-
-        tickets[ticket_id] = {
-            'name': users[user]['name'],
-            'surname': users[user]['surname'],
-            'email': users[user].get('email', 'N/A'),
-            'code': code,
-            'qr': qr_path,
-            'date_purchased': datetime.now().strftime("%Y-%m-%d %H:%M"),
-            'used': False,
-            'quantity': count   
-        }
-
-    return redirect('/dashboard')
+    return render_template('buy.html')
 
 @app.route('/use/<ticket_id>')
 def mark_ticket_used(ticket_id):
