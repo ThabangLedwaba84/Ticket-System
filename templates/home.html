@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body{
+
+   
+
+           background: url("{{ url_for('static', filename='image/image2.jpeg') }}");
+           background-repeat: no-repeat;
+           background-size: cover;
+
+           min-height: 250vh;
+        overflow-y: scroll
+    }
+
+  .btn-buy {
+    margin-top: 450px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+
+    /* Bigger size */
+    padding: 20px 45px;
+    font-size: 50px;
+    font-weight: bold;
+    border-radius: 10px;
+
+    /* Glow animation */
+    animation: glow 2s infinite;
+
+    transition: all 0.3s ease;
+}
+
+
+.btn-buy:hover {
+    background-color: #28a745; 
+    color: white;
+    transform: scale(1.08); 
+}
+
+/* Glow animation */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px #28a745;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 25px #28a745, 0 0 50px #28a745;
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 0 0 5px #28a745;
+        transform: scale(1);
+    }
+}
+</style>
+<div class="text-center">
+   <a href="/dashboard" class="btn btn-buy">BUY TICKET</a>
+
+</div>
+{% endblock %}

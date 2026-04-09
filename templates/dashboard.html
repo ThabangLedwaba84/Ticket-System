@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% block content %}
+<nav>
+    <div style="text-align: left; margin: 10px;">
+    <a href="{{ url_for('home') }}" class="btn btn-secondary">
+        ← Back to Home
+    </a>
+</div>
+</nav>
+<style>
+    h2, h3 {
+        text-align: center;
+    }
+
+    form {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+  
+    .btn-warning {
+        background-color: #ffc107;
+        color: #000;
+        margin-left: 150px;
+    }
+
+    .ticket-table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .ticket-table td {
+        padding: 15px;
+        vertical-align: top;
+    }
+
+    .ticket-details {
+        width: 60%;
+    }
+
+    .ticket-qr {
+        width: 40%;
+        text-align: center;
+    }
+
+    .ticket-qr img {
+        width: 180px;
+        display: block;
+        margin: 0 auto 10px auto;
+    }
+
+    .download-btn {
+        display: inline-block;
+        background-color: blue;
+        color: white;
+        padding: 8px 12px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .download-btn:hover {
+        background-color: darkblue;
+    }
+    .ticket-status {
+    width: 20%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.status-box {
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 30px;
+}
+
+.status-box.used {
+    background-color: red;
+}
+
+.status-box.not-used {
+    background-color: green;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    width: 300px;
+    margin: 15% auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.btn-success{
+    margin-top: 50px;
+    margin-left: 170px;
+}
+
+.remove-btn {
+    background-color: red;
+    display: inline-block;
+}
+
+.remove-btn:hover {
+    background-color: darkred;
+}
+
+body{
+
+   
+
+           background: url("{{ url_for('static', filename='image/image5.jpeg') }}");
+           background-repeat: no-repeat;
+           background-size: cover;
+
+           min-height: 250vh;
+        overflow-y: scroll
+    }
+</style>
+
+<h2>Your Tickets</h2>
+
+<form method="POST" action="/buy">
+    <input name="name" class="form-control" placeholder="Name" required>
+    <input name="surname" class="form-control" placeholder="Surname" required>
+    <input name="email" class="form-control" placeholder="Email" required><br>
+
+    <a href="#" onclick="openTicketPopup()" class="btn btn-success">
+        Buy Ticket ({{ tickets|length }})
+    </a>
+</form>
+
+
+<!-- POPUP MODAL -->
+<div id="ticketPopup" class="popup">
+    <div class="popup-content">
+        <h3>How many tickets?</h3>
+        <input type="number" id="ticketCount" min="1" value="1" class="form-control">
+        <br>
+        <button onclick="submitTickets()" class="btn btn-primary">Buy</button>
+        <button onclick="closeTicketPopup()" class="btn btn-danger">Cancel</button>
+    </div>
+</div>
+
+
+
+ <div style="margin-top: 15px;">
+{% for ticket in tickets %}
+ <table class="ticket-table">
+            <tr>
+ <td class="ticket-details">
+    <p>Name: {{ ticket.name }} {{ ticket.surname }}</p>
+    <p>Email: {{ ticket.email }}</p>
+    <p>Code: {{ ticket.code }}</p>
+    <p>Tickets Bought: {{ ticket.quantity }}</p>
+    {% if ticket.date_purchased %}
+        <p>Date Purchased: {{ ticket.date_purchased }}</p>
+    {% endif %}
+ </td>
+
+  <!-- STATUS COLUMN -->
+                <td class="ticket-status">
+                    {% if ticket.used %}
+                        <div class="status-box used">Used</div>
+                    {% else %}
+                        <div class="status-box not-used">Not Used</div>
+                    {% endif %}
+
+
+                  <a href="/delete/{{ loop.index0 }}"  class="status-box remove-btn" style="text-decoration:none; margin-top:10px; display:inline-block;">
+            Remove
+        </a>
+                </td>
+
+    <td class="ticket-qr">
+          <img src="/{{ ticket.qr }}">
+   <a href="{{ url_for('download_ticket', ticket_id=id) }}" class="download-btn">
+                        Download PDF
+                    </a>
+                </td>
+            </tr>
+        </table>
+        {% endfor %}
+    </div>
+</details>
+
+<script>
+function openTicketPopup() {
+    document.getElementById("ticketPopup").style.display = "block";
+}
+
+function closeTicketPopup() {
+    document.getElementById("ticketPopup").style.display = "none";
+}
+
+function submitTickets() {
+    let count = document.getElementById("ticketCount").value;
+
+    let name = document.querySelector("input[name='name']").value;
+    let surname = document.querySelector("input[name='surname']").value;
+    let email = document.querySelector("input[name='email']").value;
+
+    if (count < 1) {
+        alert("Please enter a valid number");
+        return;
+    }
+
+    window.location.href = `/buy?count=${count}&name=${name}&surname=${surname}&email=${email}`;
+}
+    </script>
+{% endblock %}

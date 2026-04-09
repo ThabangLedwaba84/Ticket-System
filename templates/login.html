@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+     body{
+
+   
+
+           background: url("{{ url_for('static', filename='image/image5.jpeg') }}");
+           background-repeat: no-repeat;
+           background-size: cover;
+
+           min-height: 250vh;
+        overflow-y: scroll
+    }
+      form {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+
+
+</style>
+<nav>
+    <div style="text-align: left; margin: 10px;">
+    <a href="{{ url_for('home') }}" class="btn btn-secondary">
+        ← Back to Home
+    </a>
+</div>
+<form method="POST">
+     <h1 style="text-align: center;">Login</h1>
+<input name="email" class="form-control mb-2" placeholder="Email" required>
+<input name="password" type="password" class="form-control mb-2" placeholder="Password" required>
+<button class="btn btn-primary" style="margin-left: 200px;">Login</button>
+</form>
+{% endblock %}
