@@ -1,61 +1,78 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    body{
+    body {
+        background: url("{{ url_for('static', filename='image/image2.jpeg') }}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
 
-   
-
-           background: url("{{ url_for('static', filename='image/image2.jpeg') }}");
-           background-repeat: no-repeat;
-           background-size: cover;
-
-           min-height: 250vh;
-        overflow-y: scroll
+        min-height: 100vh;
+        margin: 0;
     }
 
-  .btn-buy {
-    margin-top: 450px;
-    background-color: #28a745;
-    color: white;
-    border: none;
+    /* Center content perfectly on all screens */
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+    }
 
-    /* Bigger size */
-    padding: 20px 45px;
-    font-size: 50px;
-    font-weight: bold;
-    border-radius: 10px;
+    .btn-buy {
+        background-color: #28a745;
+        color: white;
+        border: none;
+
+        /* Responsive sizing */
+        padding: 15px 30px;
+        font-size: 28px;
+        font-weight: bold;
+        border-radius: 10px;
+
+        animation: glow 2s infinite;
+        transition: all 0.3s ease;
+    }
+
+    .btn-buy:hover {
+        background-color: #28a745;
+        color: white;
+        transform: scale(1.08);
+    }
 
     /* Glow animation */
-    animation: glow 2s infinite;
-
-    transition: all 0.3s ease;
-}
-
-
-.btn-buy:hover {
-    background-color: #28a745; 
-    color: white;
-    transform: scale(1.08); 
-}
-
-/* Glow animation */
-@keyframes glow {
-    0% {
-        box-shadow: 0 0 5px #28a745;
-        transform: scale(1);
+    @keyframes glow {
+        0% {
+            box-shadow: 0 0 5px #28a745;
+        }
+        50% {
+            box-shadow: 0 0 25px #28a745, 0 0 50px #28a745;
+        }
+        100% {
+            box-shadow: 0 0 5px #28a745;
+        }
     }
-    50% {
-        box-shadow: 0 0 25px #28a745, 0 0 50px #28a745;
-        transform: scale(1.05);
+
+    /* 📱 Mobile adjustments */
+    @media (max-width: 768px) {
+        .btn-buy {
+            font-size: 20px;
+            padding: 12px 25px;
+        }
     }
-    100% {
-        box-shadow: 0 0 5px #28a745;
-        transform: scale(1);
+
+    /* 📱 Small phones */
+    @media (max-width: 480px) {
+        .btn-buy {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
     }
-}
 </style>
-<div class="text-center">
-   <a href="/dashboard" class="btn btn-buy">BUY TICKET</a>
 
+<div class="center-container">
+    <a href="/dashboard" class="btn btn-buy">BUY TICKET</a>
 </div>
+
 {% endblock %}
