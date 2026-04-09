@@ -1,0 +1,25 @@
+
+<script src="https://www.paypal.com/sdk/js?client-id=AfE7Dk_XHIdYcgq7Sy2rwmzQa9mgrj33TmRPh2FOtsAOF5557OmRM7A_OaGbYHT7xMegjPmkPbLfQyO1"></script>
+
+<div id="paypal-button-container"></div>
+
+<script>
+paypal.Buttons({
+    createOrder: function() {
+        return fetch('/create-order', {
+            method: 'post'
+        }).then(res => res.json())
+          .then(data => data.id);
+    },
+
+    onApprove: function(data) {
+        return fetch('/capture-order/' + data.orderID, {
+            method: 'post'
+        }).then(res => res.json())
+          .then(details => {
+              alert("Payment successful!");
+              window.location.href = "/dashboard";
+          });
+    }
+}).render('#paypal-button-container');
+</script>
