@@ -1,3 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+     body{
+
+   
+
+           background: url("{{ url_for('static', filename='image/image5.jpeg') }}");
+           background-repeat: no-repeat;
+           background-size: cover;
+
+           min-height: 250vh;
+        overflow-y: scroll
+    }
+      form {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+
+
+</style>
+<nav>
+    <div style="text-align: left; margin: 10px;">
+    <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary">
+        ← Back to Home
+    </a>
+</div>
+<form method="POST">
+     <h1 style="text-align: center;">Payments</h1>
 
 <script src="https://www.paypal.com/sdk/js?client-id=AfE7Dk_XHIdYcgq7Sy2rwmzQa9mgrj33TmRPh2FOtsAOF5557OmRM7A_OaGbYHT7xMegjPmkPbLfQyO1"></script>
 
@@ -23,3 +57,5 @@ paypal.Buttons({
     }
 }).render('#paypal-button-container');
 </script>
+</form>
+{% endblock %}
