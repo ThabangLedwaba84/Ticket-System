@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+<script 
+  src="https://www.paypal.com/sdk/js?client-id=BAAxKpjvg7kl8mzRn32vn9yEhbZVuOxQx673QgaCfqppynUFvEKlbfDOgZICaXUQ6ck4zp4Hec4d-W0N3o&components=hosted-buttons&disable-funding=venmo&currency=USD">
+</script>
 <style>
      body{
 
@@ -33,29 +36,15 @@
 <form method="POST">
      <h1 style="text-align: center;">Payments</h1>
 
-<script src="https://www.paypal.com/sdk/js?client-id=AfE7Dk_XHIdYcgq7Sy2rwmzQa9mgrj33TmRPh2FOtsAOF5557OmRM7A_OaGbYHT7xMegjPmkPbLfQyO1"></script>
 
-<div id="paypal-button-container"></div>
-
+<div id="paypal-container-J3J659FEXXZMN"></div>
 <script>
-paypal.Buttons({
-    createOrder: function() {
-        return fetch('/create-order', {
-            method: 'post'
-        }).then(res => res.json())
-          .then(data => data.id);
-    },
-
-    onApprove: function(data) {
-        return fetch('/capture-order/' + data.orderID, {
-            method: 'post'
-        }).then(res => res.json())
-          .then(details => {
-              alert("Payment successful!");
-              window.location.href = "/dashboard";
-          });
-    }
-}).render('#paypal-button-container');
+  paypal.HostedButtons({
+    hostedButtonId: "J3J659FEXXZMN",
+  }).render("#paypal-container-J3J659FEXXZMN")
 </script>
+
+
+
 </form>
 {% endblock %}
