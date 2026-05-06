@@ -126,6 +126,13 @@
     background-color: darkred;
 }
 
+.btn-refund{
+  background-color: blue;
+  color: white;
+  margin-top: 50px;
+  margin-left: 170px;
+  text-decoration: none;
+}
 body{
 
    
@@ -146,22 +153,19 @@ body{
     <input name="surname" class="form-control" placeholder="Surname" required><br>
     <input name="email" class="form-control" placeholder="Email" required><br>
 
-    <a href="#" onclick="openTicketPopup()" class="btn btn-success">
+    <div style="display: flex; gap: 10px;"> 
+       <a href="#" class="btn btn-success">
         Buy Ticket ({{ tickets|length }})
     </a>
+       <a href="#" class="btn btn-refund">
+        Refund ({{ tickets|length }})
+    </a>
+    
+    </div>
+ 
 </form>
 
 
-<!-- POPUP MODAL -->
-<div id="ticketPopup" class="popup">
-    <div class="popup-content">
-        <h3>How many tickets?</h3>
-        <input type="number" id="ticketCount" min="1" value="1" class="form-control">
-        <br>
-        <button onclick="submitTickets()" class="btn btn-primary">Buy</button>
-        <button onclick="closeTicketPopup()" class="btn btn-danger">Cancel</button>
-    </div>
-</div>
 
 
 
