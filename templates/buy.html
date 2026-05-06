@@ -39,9 +39,17 @@
      <h1 style="text-align: center;">Payments</h1>
 
 
+-- ONLY this script -->
+<script 
+  src="https://www.paypal.com/sdk/js?client-id=BAAxKpjvg7kl8mzRn32vn9yEhbZVuOxQx673QgaCfqppynUFvEKlbfDOgZICaXUQ6ck4zp4Hec4d-W0N3o&components=hosted-buttons&disable-funding=venmo&currency=USD">
+</script>
+
+</head>
+<body>
+
 <div id="paypal-container-J3J659FEXXZMN"></div>
+
 <script>
-  
   paypal.HostedButtons({
     hostedButtonId: "J3J659FEXXZMN",
   }).render("#paypal-container-J3J659FEXXZMN");
@@ -49,7 +57,6 @@
   components=buttons,hosted-fields
   
 </script>
-
 
 
 </form>
