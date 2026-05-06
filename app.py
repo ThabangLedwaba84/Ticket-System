@@ -112,7 +112,7 @@ def capture_order():
 
 @app.route('/')
 def home():
-    return render_template("pay.html")
+    return render_template("buy.html")
 
 
 @app.route('/tickets')
